@@ -11,6 +11,7 @@
 |
 */
 
+Route::resource('/persona','PersonaController');
 Route::get('/', function () {
     return view('welcome');
 });
