@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Persona;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\PersonaRequests;
 class PersonaController extends Controller
 {
-     /**	
+     /**
      * Create a new controller instance.
      *
      * @return void
@@ -15,16 +15,16 @@ class PersonaController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-    }	 
+    }
    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-  
+
    public function index()
     {
-	$dat = Persona::all();
+	      $dat = Persona::all();
         return view('persona.index',compact('dat'));
     }
 
@@ -44,9 +44,13 @@ class PersonaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PersonaRequests $request)
     {
-        //
+        //dd($request);
+        $id = Persona::create($request->all());
+        return back()->with('success','Agregado Exitosamente' );
+
+
     }
 
     /**
@@ -89,8 +93,9 @@ class PersonaController extends Controller
      * @param  \App\Persona  $persona
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Persona $persona)
+    public function destroy($id)
     {
-        //
+        Persona::destroy($id);
+        return back()->with('success','Persona Eliminada' );
     }
 }
